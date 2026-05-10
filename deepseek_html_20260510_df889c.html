@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="红色沙漠攻略站 - 提供最新资讯、职业攻略、装备指南、地图解析等全方位攻略内容，助力征战帕卫尔大陆。">
+    <meta name="theme-color" content="#0B0A0C">
+    <title>红色沙漠攻略站 | Crimson Desert · 完全指南</title>
+    <!-- Font Awesome 6 (免费图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts Inter & 备用字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: #0B0A0C;
+            color: #E9E9EF;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        /* 精致噪点纹理 + 动态光晕背景 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(230, 57, 70, 0.08) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 自定义滚动条 (更精致) */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #18171C;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E63946;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff5c66;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* 顶部导航 */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 24px 0 20px;
+            border-bottom: 1px solid rgba(199, 60, 62, 0.4);
+            backdrop-filter: blur(2px);
+        }
+
+        .logo h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #F87171, #E63946, #FFB4A2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .logo p {
+            font-size: 0.7rem;
+            color: #A8A8C0;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #D1D1E5;
+            position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #E63946;
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #E63946;
+            border-radius: 2px;
+        }
+
+        .search-box {
+            display: flex;
+            background: #1E1C24;
+            border-radius: 48px;
+            padding: 6px 12px;
+            align-items: center;
+            border: 1px solid #32303a;
+            transition: all 0.2s;
+        }
+        .search-box:focus-within {
+            border-color: #E63946;
+            box-shadow: 0 0 0 2px rgba(230,57,70,0.3);
+        }
+        .search-box input {
+            background: transparent;
+            border: none;
+            padding: 8px 12px;
+            color: #f0f0f0;
+            outline: none;
+            font-size: 0.85rem;
+            width: 150px;
+        }
+        .search-box button {
+            background: none;
+            border: none;
+            color: #E63946;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.1s;
+        }
+        .search-box button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hero 增强区 */
+        .hero {
+            margin: 48px 0 40px;
+            text-align: center;
+            background: radial-gradient(ellipse at 30% 35%, rgba(199,60,62,0.2), transparent 70%);
+            padding: 48px 20px;
+            border-radius: 56px;
+            backdrop-filter: blur(2px);
+        }
+        .hero h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #FFF, #FFB7AE);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 18px;
+            letter-spacing: -0.02em;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #CACAD8;
+            max-width: 700px;
+            margin: 0 auto 28px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary, .btn-secondary {
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: #E63946;
+            color: white;
+            box-shadow: 0 8px 18px rgba(230,57,70,0.35);
+        }
+        .btn-primary:hover {
+            background: #C62C38;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px -8px rgba(230,57,70,0.5);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid #524F5A;
+            color: #F0F0F0;
+        }
+        .btn-secondary:hover {
+            background: rgba(230,57,70,0.2);
+            border-color: #E63946;
+            transform: translateY(-2px);
+        }
+
+        /* 需求分析核心模块 (升级) */
+        .analysis-section {
+            background: rgba(18, 16, 22, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            padding: 36px 36px;
+            margin: 48px 0;
+            border-left: 6px solid #E63946;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6);
+        }
+        .analysis-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+            font-size: 1.7rem;
+            font-weight: 700;
+        }
+        .analysis-title i {
+            color: #E63946;
+            font-size: 2rem;
+        }
+        .demand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 24px;
+        }
+        .demand-card {
+            background: #1C1922;
+            padding: 24px 20px;
+            border-radius: 24px;
+            transition: all 0.25s;
+            border: 1px solid #2E2A35;
+        }
+        .demand-card:hover {
+            background: #26222E;
+            transform: translateY(-5px);
+            border-color: #E6394660;
+            box-shadow: 0 12px 22px -12px rgba(0,0,0,0.4);
+        }
+        .demand-card i {
+            font-size: 2.2rem;
+            color: #E97C7A;
+            margin-bottom: 14px;
+        }
+        .demand-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+        .demand-card p {
+            font-size: 0.85rem;
+            color: #C6C2D4;
+            line-height: 1.45;
+        }
+
+        /* 快捷分类改良 */
+        .quick-cats {
+            margin: 52px 0 36px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+        .section-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-header a {
+            color: #E63946;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .section-header a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        .cat-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+        .cat-item {
+            flex: 1;
+            min-width: 90px;
+            background: #131016;
+            border-radius: 48px;
+            padding: 16px 8px;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid #2C2833;
+        }
+        .cat-item i {
+            font-size: 2rem;
+            color: #E9736F;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .cat-item span {
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .cat-item:hover {
+            background: #261F2C;
+            border-color: #E63946;
+            transform: translateY(-4px);
+        }
+
+        /* 卡片网格优化 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 24px 0 48px;
+        }
+        .guide-card {
+            background: #121016;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: transform 0.25s, box-shadow 0.3s;
+            border: 1px solid #24212A;
+            backdrop-filter: blur(2px);
+        }
+        .guide-card:hover {
+            transform: translateY(-8px);
+            border-color: #E63946AA;
+            box-shadow: 0 25px 35px -18px rgba(0,0,0,0.8);
+        }
+        .card-img {
+            height: 160px;
+            background: linear-gradient(135deg, #201D27, #15121C);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #E63946;
+        }
+        .card-content {
+            padding: 22px;
+        }
+        .card-tag {
+            font-size: 0.7rem;
+            background: #E6394622;
+            color: #FFA39E;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .guide-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+        .guide-card p {
+            font-size: 0.85rem;
+            color: #B5B1C6;
+            margin-bottom: 20px;
+            line-height: 1.45;
+        }
+        .read-more {
+            font-weight: 600;
+            color: #E63946;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+        .read-more:hover {
+            gap: 10px;
+            color: #FF807A;
+        }
+
+        /* 新闻动态优化 */
+        .news-list {
+            background: #0F0C13;
+            border-radius: 32px;
+            padding: 8px 28px;
+            margin: 20px 0 56px;
+            border: 1px solid #2B2632;
+        }
+        .news-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 0;
+            border-bottom: 1px solid #25212C;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .news-item:hover {
+            background: rgba(230,57,70,0.05);
+            padding-left: 8px;
+            border-radius: 18px;
+        }
+        .news-date {
+            background: #201E28;
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #F2B0AA;
+            min-width: 100px;
+            text-align: center;
+        }
+        .news-title {
+            font-weight: 600;
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        .news-badge {
+            background: #E6394622;
+            color: #FF9A93;
+            font-size: 0.7rem;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        /* 订阅区域更精致 */
+        .subscribe {
+            background: linear-gradient(125deg, #16131E, #0C0A10);
+            border-radius: 36px;
+            padding: 40px 36px;
+            text-align: center;
+            margin: 40px 0 48px;
+            border: 1px solid #312C3C;
+        }
+        .subscribe h4 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+        .subscribe p {
+            margin-bottom: 28px;
+            color: #C9C5DA;
+        }
+        .sub-form {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .sub-form input {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            background: #21202C;
+            width: 300px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        .sub-form input:focus {
+            background: #2a2838;
+            box-shadow: 0 0 0 2px #E6394660;
+        }
+        .sub-form button {
+            background: #E63946;
+            border: none;
+            padding: 0 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        .sub-form button:hover {
+            background: #C22F3C;
+            transform: scale(0.98);
+        }
+
+        /* 返回顶部按钮 */
+        .go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #E63946;
+            width: 46px;
+            height: 46px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 99;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+        .go-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .go-top:hover {
+            background: #B82633;
+            transform: translateY(-4px);
+        }
+
+        /* Toast 提示 (优雅取代 alert) */
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #1F1C26e6;
+            backdrop-filter: blur(12px);
+            border: 1px solid #E63946;
+            color: #FFE3E0;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            pointer-events: none;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .toast-message.show-toast {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        @media (max-width: 600px) {
+            .toast-message { white-space: normal; max-width: 85%; text-align: center; padding: 10px 20px; font-size: 0.8rem; }
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding: 28px 0 40px;
+            border-top: 1px solid #282430;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            font-size: 0.8rem;
+            color: #9F9CB0;
+        }
+        .social i {
+            font-size: 1.3rem;
+            margin-left: 22px;
+            transition: 0.2s;
+            color: #CBC6DC;
+            cursor: pointer;
+        }
+        .social i:hover {
+            color: #E63946;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 840px) {
+            .container { padding: 0 20px; }
+            .navbar { flex-direction: column; gap: 18px; align-items: stretch; }
+            .nav-links { justify-content: center; gap: 1.2rem; margin-top: 6px; flex-wrap: wrap; }
+            .search-box { width: 100%; max-width: 260px; margin: 6px auto 0; }
+            .hero h2 { font-size: 2.4rem; }
+            .analysis-section { padding: 26px; }
+            .section-header h3 { font-size: 1.5rem; }
+            .cat-icons { gap: 12px; }
+            .cat-item { min-width: 75px; padding: 12px 5px; }
+        }
+        @media (max-width: 520px) {
+            .hero h2 { font-size: 1.8rem; }
+            .btn-primary, .btn-secondary { padding: 10px 22px; font-size: 0.85rem; }
+            .news-item { flex-wrap: wrap; gap: 8px; }
+            .news-date { min-width: auto; font-size: 0.7rem; }
+        }
+        .cursor-pointer { cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <h1>CRIMSON DESERT</h1>
+            <p>红色沙漠 · 全境攻略站</p>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active" data-dev="tooltip">首页</a>
+            <a href="#" data-dev="tooltip">攻略库</a>
+            <a href="#" data-dev="tooltip">职业模拟</a>
+            <a href="#" data-dev="tooltip">装备图鉴</a>
+            <a href="#" data-dev="tooltip">地图工具</a>
+            <a href="#" data-dev="tooltip">社区</a>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索攻略...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区 -->
+    <div class="hero">
+        <h2>征战帕卫尔大陆</h2>
+        <p>最全红色沙漠攻略站 · 新手入坑 · 职业流派 · BOSS机制 · 隐藏宝藏</p>
+        <div class="btn-group">
+            <a href="#" class="btn-primary" data-dev="guide"><i class="fas fa-book-open"></i> 新手必读</a>
+            <a href="#" class="btn-secondary" data-dev="guide"><i class="fas fa-map-marked-alt"></i> 热门攻略</a>
+        </div>
+    </div>
+
+    <!-- 玩家核心需求分析 (MVP洞察) -->
+    <div class="analysis-section">
+        <div class="analysis-title">
+            <i class="fas fa-chart-simple"></i>
+            <span>玩家核心需求分析</span>
+        </div>
+        <div class="demand-grid">
+            <div class="demand-card"><i class="fas fa-newspaper"></i><h3>最新资讯 · 版本前瞻</h3><p>第一时间获取官方动态、更新日志、实机演示，预购/测试情报速递。</p></div>
+            <div class="demand-card"><i class="fas fa-helmet-battle"></i><h3>职业/流派深度剖析</h3><p>全职业技能连招、PVE/PVP配装、觉醒任务详解，战力天花板突破。</p></div>
+            <div class="demand-card"><i class="fas fa-hammer"></i><h3>装备锻造 & 强化路线</h3><p>武器防具获取、强化概率、水晶镶嵌、套装效果与毕业配装方案。</p></div>
+            <div class="demand-card"><i class="fas fa-dragon"></i><h3>世界BOSS & 副本机制</h3><p>全BOSS技能拆解、开荒走位、团队配置以及隐藏掉落攻略。</p></div>
+            <div class="demand-card"><i class="fas fa-tree"></i><h3>地图资源 & 隐藏要素</h3><p>区域采集点、精英怪分布、宝藏位置、知识获取及全图探索指南。</p></div>
+            <div class="demand-card"><i class="fas fa-calculator"></i><h3>实用工具箱 & 模拟器</h3><p>伤害计算器、技能模拟、强化预算及生活系统收益分析 (即将推出)。</p></div>
+        </div>
+        <p style="margin-top: 28px; font-size: 0.8rem; color:#D0BAB4; border-top: 1px solid #302C3A; padding-top: 18px;"><i class="fas fa-chart-line"></i> MVP 规划: 基于以上6大需求，当前页面提供攻略卡片、分类入口及新闻动态，后续将扩充交互式数据库与完整WIKI模块。</p>
+    </div>
+
+    <!-- 快捷导航分类 -->
+    <div class="quick-cats">
+        <div class="section-header">
+            <h3><i class="fas fa-compass"></i> 攻略快捷导航</h3>
+            <a href="#" data-dev="category">全部攻略 <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="cat-icons">
+            <div class="cat-item" data-cat="职业"><i class="fas fa-user-ninja"></i><span>职业大全</span></div>
+            <div class="cat-item" data-cat="装备"><i class="fas fa-shield-alt"></i><span>装备强化</span></div>
+            <div class="cat-item" data-cat="任务"><i class="fas fa-scroll"></i><span>主线任务</span></div>
+            <div class="cat-item" data-cat="地图"><i class="fas fa-map"></i><span>全地图资源</span></div>
+            <div class="cat-item" data-cat="成就"><i class="fas fa-trophy"></i><span>成就/称号</span></div>
+            <div class="cat-item" data-cat="生活"><i class="fas fa-chess-queen"></i><span>生活玩法</span></div>
+        </div>
+    </div>
+
+    <!-- 热门攻略卡片 -->
+    <div class="section-header">
+        <h3><i class="fas fa-fire"></i> 热门攻略推荐</h3>
+        <a href="#" data-dev="more-guide">更多 <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="card-grid">
+        <div class="guide-card"><div class="card-img"><i class="fas fa-hat-wizard"></i></div><div class="card-content"><span class="card-tag">新手必看</span><h4>零基础入坑指南 · 创角/前20级</h4><p>职业选择建议、初期主线提速技巧、首件神器获取路线。</p><a href="#" class="read-more" data-dev="guide-detail">阅读全文 <i class="fas fa-chevron-right"></i></a></div></div>
+        <div class="guide-card"><div class="card-img"><i class="fas fa-skull"></i></div><div class="card-content"><span class="card-tag">BOSS攻略</span><h4>「暗影魔蜥」无伤击杀思路</h4><p>阶段机制+仇恨分离+躲避循环，附全职业站位推荐。</p><a href="#" class="read-more" data-dev="guide-detail">阅读全文 <i class="fas fa-chevron-right"></i></a></div></div>
+        <div class="guide-card"><div class="card-img"><i class="fas fa-gem"></i></div><div class="card-content"><span class="card-tag">装备研究</span><h4>传说武器「赤红黎明」获取任务链</h4><p>隐藏前置条件、解谜线索及强化材料速刷路线。</p><a href="#" class="read-more" data-dev="guide-detail">获取攻略 →</a></div></div>
+        <div class="guide-card"><div class="card-img"><i class="fas fa-running"></i></div><div class="card-content"><span class="card-tag">PVP竞技</span><h4>狂战士 vs 游侠 实战连招克制</h4><p>竞技场1v1核心技能循环、抓后摇与反制技巧。</p><a href="#" class="read-more" data-dev="guide-detail">阅读全文 <i class="fas fa-chevron-right"></i></a></div></div>
+    </div>
+
+    <!-- 进阶专题 -->
+    <div class="section-header"><h3><i class="fas fa-star-of-life"></i> 进阶专题 · 硬核向</h3><a href="#" data-dev="topic">更多专题</a></div>
+    <div class="card-grid">
+        <div class="guide-card"><div class="card-img"><i class="fas fa-chart-line"></i></div><div class="card-content"><span class="card-tag">数据党</span><h4>全职业伤害稀释阈值分析</h4><p>攻击/暴伤/破防效益曲线，最优配装权重计算。</p><a href="#" class="read-more" data-dev="analysis">深入研究 →</a></div></div>
+        <div class="guide-card"><div class="card-img"><i class="fas fa-mountain"></i></div><div class="card-content"><span class="card-tag">探索向</span><h4>全地图隐藏洞穴与古代遗物坐标</h4><p>目前发现27处隐藏宝物点+解密机关教学。</p><a href="#" class="read-more" data-dev="explore">查看坐标 →</a></div></div>
+        <div class="guide-card"><div class="card-img"><i class="fas fa-ship"></i></div><div class="card-content"><span class="card-tag">生活大师</span><h4>贸易/钓鱼/驯兽 全赚钱路线收益对比</h4><p>日入百万银币的黄金循环路线及各区域特产。</p><a href="#" class="read-more" data-dev="trade">赚银币指南</a></div></div>
+    </div>
+
+    <!-- 最新动态 -->
+    <div class="section-header"><h3><i class="fas fa-bell"></i> 最新动态 · 官方情报</h3><a href="#" data-dev="news-history">查看历史</a></div>
+    <div class="news-list">
+        <div class="news-item" data-news="1"><div class="news-date">2025.04.28</div><div class="news-title">红色沙漠三测资格申请开启，新增「龙骑」职业首曝</div><div class="news-badge">热门</div></div>
+        <div class="news-item" data-news="2"><div class="news-date">2025.04.15</div><div class="news-title">开发团队笔记: 天气系统全面进化 动态环境将影响BOSS行为</div><div class="news-badge">资讯</div></div>
+        <div class="news-item" data-news="3"><div class="news-date">2025.04.02</div><div class="news-title">官方公布新实机12分钟演示，展示沙漠都市“卡拉佩特”探索</div><div class="news-badge">视频</div></div>
+        <div class="news-item" data-news="4"><div class="news-date">2025.03.20</div><div class="news-title">攻略站抢先整理: 全球地区发售时间预测 & 配置需求预估</div><div class="news-badge">前瞻</div></div>
+    </div>
+
+    <!-- 订阅区 -->
+    <div class="subscribe">
+        <h4><i class="fas fa-envelope-open-text"></i> 攻略站专属快报</h4>
+        <p>抢先获取测试资格动向 + 独家原创攻略PDF + 地图资源包</p>
+        <div class="sub-form">
+            <input type="email" id="subEmail" placeholder="你的邮箱地址">
+            <button id="subBtn">订阅攻略简报</button>
+        </div>
+        <p style="font-size: 0.7rem; margin-top: 14px; opacity: 0.7;">每周精选攻略，无垃圾广告。</p>
+    </div>
+
+    <div class="footer">
+        <div>© 2025 红色沙漠攻略站 · 非官方爱好者社区 | 数据基于测试版本与前瞻</div>
+        <div class="social"><i class="fab fa-discord"></i><i class="fab fa-twitter"></i><i class="fab fa-bilibili"></i><i class="fab fa-youtube"></i></div>
+    </div>
+</div>
+
+<!-- 返回顶部按钮 -->
+<div class="go-top" id="goTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    // 优雅 Toast 提示 (替代 alert)
+    function showToast(msg, duration = 2600) {
+        let toast = document.querySelector('.toast-message');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'toast-message';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = msg;
+        toast.classList.add('show-toast');
+        setTimeout(() => {
+            toast.classList.remove('show-toast');
+        }, duration);
+    }
+
+    // 处理所有开发中提示 (优雅替代alert)
+    const devElements = document.querySelectorAll('[data-dev], .cat-item, .news-item, .social i, .go-top');
+    function handleDevClick(e) {
+        const target = e.currentTarget;
+        // 社交图标特殊友好提示
+        if (target.closest('.social')) {
+            showToast('🎮 官方社区 & 社交平台即将开放，敬请期待~');
+            e.preventDefault();
+            return;
+        }
+        if (target.classList && target.classList.contains('news-item')) {
+            showToast('📰 完整新闻详情即将更新，关注红色沙漠最新动态');
+            e.preventDefault();
+            return;
+        }
+        if (target.classList && target.classList.contains('cat-item')) {
+            showToast(`「${target.querySelector('span')?.innerText || '分类'}」攻略筛选即将上线，更多深度内容准备中`);
+            e.preventDefault();
+            return;
+        }
+        // 通用开发中提示
+        showToast('🔥 攻略完善中，更多深度内容即将上线，请保持关注！');
+        e.preventDefault();
+    }
+
+    document.querySelectorAll('[data-dev]').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast('✨ 完整内容正在筹备，敬请期待红色沙漠攻略站后续更新！');
+        });
+    });
+    document.querySelectorAll('.cat-item').forEach(el => el.addEventListener('click', handleDevClick));
+    document.querySelectorAll('.news-item').forEach(el => el.addEventListener('click', handleDevClick));
+    document.querySelectorAll('.social i').forEach(el => el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showToast('📢 官方账号即将联动，关注抢先获取资讯');
+    }));
+
+    // 订阅逻辑加强
+    const subBtn = document.getElementById('subBtn');
+    const subEmail = document.getElementById('subEmail');
+    subBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = subEmail.value.trim();
+        if (!email || !email.includes('@')) {
+            showToast('请填写有效的邮箱地址，以便接收攻略更新～');
+        } else {
+            showToast(`🎉 感谢订阅！攻略简报将会发送至 ${email}，一起征战帕卫尔！`);
+            subEmail.value = '';
+            localStorage.setItem('newsletter_email', email);
+        }
+    });
+    // 搜索模拟
+    const searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.getElementById('searchInput');
+    searchBtn?.addEventListener('click', () => {
+        const kw = searchInput.value.trim();
+        if (kw) showToast(`🔍 即将搜索“${kw}”相关内容，完整搜索索引开发中`);
+        else showToast('输入关键词探索红色沙漠全攻略');
+    });
+    searchInput?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') searchBtn.click();
+    });
+
+    // 返回顶部按钮逻辑
+    const goTopBtn = document.getElementById('goTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) goTopBtn.classList.add('show');
+        else goTopBtn.classList.remove('show');
+    });
+    goTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast('回到顶部 ⬆️');
+    });
+    // 初次挂载检查
+    if (window.scrollY > 400) goTopBtn.classList.add('show');
+</script>
+</body>
+</html>

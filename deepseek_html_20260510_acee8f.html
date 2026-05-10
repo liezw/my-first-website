@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>红色沙漠攻略站 | 全面指南 MVP</title>
+    <!-- 使用干净稳定的样式，避免冲突 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+            background: #0C0B10;
+            color: #ECECF0;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1E1C24;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D14545;
+            border-radius: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1260px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 头部 */
+        .header {
+            padding: 24px 0 16px;
+            border-bottom: 1px solid rgba(209, 69, 69, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #E54848, #FF8A7A);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            font-size: 0.7rem;
+            color: #9A98A8;
+            display: block;
+        }
+        .nav {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            color: #CFCDDC;
+        }
+        .nav a:hover, .nav .active {
+            color: #E54848;
+        }
+        .search {
+            background: #1D1B23;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            padding: 6px 16px;
+            gap: 8px;
+            border: 1px solid #302C38;
+        }
+        .search input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 0.85rem;
+            width: 150px;
+        }
+        .search button {
+            background: transparent;
+            border: none;
+            color: #E54848;
+            cursor: pointer;
+        }
+
+        /* hero */
+        .hero {
+            background: radial-gradient(circle at 20% 40%, rgba(229, 72, 72, 0.15), transparent 70%);
+            border-radius: 48px;
+            text-align: center;
+            padding: 56px 24px;
+            margin: 48px 0 40px;
+        }
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #FFF, #FF9F8F);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .hero p {
+            max-width: 660px;
+            margin: 16px auto 24px;
+            color: #BBB9CC;
+            font-size: 1.1rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary, .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-primary {
+            background: #E54848;
+            color: white;
+            box-shadow: 0 6px 14px rgba(229, 72, 72, 0.3);
+        }
+        .btn-primary:hover {
+            background: #C73636;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            border: 1px solid #5A5668;
+            background: rgba(0,0,0,0.3);
+        }
+        .btn-outline:hover {
+            border-color: #E54848;
+            background: rgba(229,72,72,0.15);
+        }
+
+        /* 需求分析卡片区 */
+        .demand-section {
+            background: #110F17;
+            border-radius: 32px;
+            padding: 32px 30px;
+            margin: 32px 0 48px;
+            border-left: 6px solid #E54848;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+        .section-title i {
+            color: #E54848;
+            font-size: 1.8rem;
+        }
+        .demand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .demand-card {
+            background: #191722;
+            padding: 20px;
+            border-radius: 24px;
+            transition: 0.2s;
+        }
+        .demand-card:hover {
+            background: #211F2A;
+            transform: translateY(-3px);
+        }
+        .demand-card i {
+            font-size: 2rem;
+            color: #E97A7A;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+        .demand-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+        .demand-card p {
+            font-size: 0.85rem;
+            color: #B1AFC3;
+        }
+
+        /* 快捷入口 */
+        .quick-access {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 18px;
+            margin: 30px 0 40px;
+        }
+        .quick-item {
+            background: #14121C;
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            padding: 18px 8px;
+            border-radius: 36px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .quick-item i {
+            font-size: 1.8rem;
+            color: #E97A7A;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .quick-item span {
+            font-weight: 500;
+        }
+        .quick-item:hover {
+            background: #241F2C;
+            transform: translateY(-3px);
+        }
+
+        /* 攻略卡片 */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin: 40px 0 24px;
+            flex-wrap: wrap;
+        }
+        .section-header h3 {
+            font-size: 1.7rem;
+            font-weight: 700;
+        }
+        .section-header a {
+            color: #E54848;
+            font-weight: 500;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+        .guide-card {
+            background: #13111A;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid #28242F;
+            transition: 0.2s;
+        }
+        .guide-card:hover {
+            border-color: #E5484870;
+            transform: translateY(-5px);
+            box-shadow: 0 18px 28px -12px black;
+        }
+        .card-img {
+            height: 150px;
+            background: linear-gradient(145deg, #22202B, #100F16);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: #E57A7A;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .tag {
+            background: #2E2636;
+            color: #F5A9A3;
+            font-size: 0.7rem;
+            border-radius: 30px;
+            padding: 4px 12px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .guide-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        .guide-card p {
+            font-size: 0.85rem;
+            color: #AEABB9;
+            margin-bottom: 16px;
+        }
+        .read-link {
+            color: #E54848;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 新闻动态 */
+        .news-block {
+            background: #0E0C14;
+            border-radius: 28px;
+            padding: 20px 28px;
+            margin: 20px 0 48px;
+        }
+        .news-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid #24212B;
+            flex-wrap: wrap;
+        }
+        .news-date {
+            background: #23212B;
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #F0B0AA;
+            min-width: 100px;
+            text-align: center;
+        }
+        .news-title {
+            flex: 1;
+            font-weight: 500;
+        }
+        .news-badge {
+            background: #E5484830;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: #FFB5AE;
+        }
+
+        /* 订阅 */
+        .subscribe-box {
+            background: linear-gradient(120deg, #15131E, #0C0A12);
+            border-radius: 32px;
+            text-align: center;
+            padding: 32px 28px;
+            margin: 40px 0;
+            border: 1px solid #2D2936;
+        }
+        .sub-form {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .sub-form input {
+            background: #1E1C26;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 60px;
+            width: 270px;
+            color: white;
+            outline: none;
+        }
+        .sub-form button {
+            background: #E54848;
+            border: none;
+            padding: 0 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .sub-form button:hover {
+            background: #BF3B3B;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 28px 0 40px;
+            border-top: 1px solid #26222E;
+            font-size: 0.8rem;
+            color: #8A88A0;
+        }
+        .social-icons i {
+            margin-left: 20px;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .social-icons i:hover {
+            color: #E54848;
+        }
+        @media (max-width: 720px) {
+            .container {
+                padding: 0 20px;
+            }
+            .hero h2 {
+                font-size: 2.1rem;
+            }
+            .demand-section {
+                padding: 24px;
+            }
+        }
+    </style>
+    <!-- Font Awesome 6 (免费图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <!-- 头部 -->
+    <div class="header">
+        <div class="logo">
+            <h1>RED DESERT 攻略站</h1>
+            <span>Crimson Desert · 全领域指引</span>
+        </div>
+        <div class="nav">
+            <a href="#" class="active">首页</a>
+            <a href="#">职业</a>
+            <a href="#">装备</a>
+            <a href="#">Boss</a>
+            <a href="#">地图库</a>
+            <a href="#">工具箱</a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="搜索攻略...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
+    <!-- Hero主视觉 -->
+    <div class="hero">
+        <h2>征服帕卫尔大陆</h2>
+        <p>新手指引 · 职业BD · 隐藏剧情 · 全装备强化 · 最全红色沙漠数据库</p>
+        <div class="btn-group">
+            <a href="#" class="btn-primary"><i class="fas fa-compass"></i> 新手必读</a>
+            <a href="#" class="btn-outline"><i class="fas fa-chart-line"></i> 热门流派</a>
+        </div>
+    </div>
+
+    <!-- 用户需求深度分析 (MVP核心理解) -->
+    <div class="demand-section">
+        <div class="section-title">
+            <i class="fas fa-users-between"></i>
+            <span>玩家核心诉求 · 攻略方向</span>
+        </div>
+        <div class="demand-grid">
+            <div class="demand-card"><i class="fas fa-newspaper"></i><h3>版本/资讯速递</h3><p>测试资格、更新公告、开发者笔记，第一时间掌握红色沙漠新动向。</p></div>
+            <div class="demand-card"><i class="fas fa-fist-raised"></i><h3>职业深度解析</h3><p>全职业技能连招、觉醒技能、PVE/PVP评分及推荐加点.</p></div>
+            <div class="demand-card"><i class="fas fa-hammer"></i><h3>装备养成大全</h3><p>武器获取、强化概率、水晶词条搭配，毕业装备制作全流程。</p></div>
+            <div class="demand-card"><i class="fas fa-dragon"></i><h3>世界BOSS/副本</h3><p>全BOSS机制拆解、走位教学、团队配置及隐藏掉落。</p></div>
+            <div class="demand-card"><i class="fas fa-map"></i><h3>全地图探索点</h3><p>精英怪点、宝藏坐标、知识收集与采集路线建议。</p></div>
+            <div class="demand-card"><i class="fas fa-calculator"></i><h3>工具/模拟器</h3><p>伤害计算、技能模拟器、强化规划 (后续逐步开放)。</p></div>
+        </div>
+        <p style="margin-top: 24px; font-size:0.8rem; color:#BBB0AD;"><i class="fas fa-chart-simple"></i> MVP策略：基于六大需求搭建内容框架，优先提供高价值图文攻略和索引，后续迭代交互式数据库与WIKI。</p>
+    </div>
+
+    <!-- 快捷入口 -->
+    <div class="quick-access">
+        <div class="quick-item"><i class="fas fa-user-astronaut"></i><span>职业图鉴</span></div>
+        <div class="quick-item"><i class="fas fa-helmet-battle"></i><span>装备强化</span></div>
+        <div class="quick-item"><i class="fas fa-scroll"></i><span>主线/支线</span></div>
+        <div class="quick-item"><i class="fas fa-map-marked-alt"></i><span>区域资源</span></div>
+        <div class="quick-item"><i class="fas fa-trophy"></i><span>称号成就</span></div>
+        <div class="quick-item"><i class="fas fa-fish"></i><span>生活系统</span></div>
+    </div>
+
+    <!-- 最新攻略版块 -->
+    <div class="section-header">
+        <h3><i class="fas fa-fire"></i> 热门攻略 · 精选推荐</h3>
+        <a href="#">更多 <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="card-grid">
+        <div class="guide-card">
+            <div class="card-img"><i class="fas fa-hat-wizard"></i></div>
+            <div class="card-content">
+                <div class="tag">新手入门</div>
+                <h4>1-30级极速升级路线</h4>
+                <p>主线跳过技巧 + 经验药水获取 + 首日战力提升指南。</p>
+                <a href="#" class="read-link">阅读全文 →</a>
+            </div>
+        </div>
+        <div class="guide-card">
+            <div class="card-img"><i class="fas fa-skull"></i></div>
+            <div class="card-content">
+                <div class="tag">BOSS攻略</div>
+                <h4>「黑曜石巨像」无伤打法</h4>
+                <p>详细站位、P1-P3阶段技能躲避与反击时机。</p>
+                <a href="#" class="read-link">阅读全文 →</a>
+            </div>
+        </div>
+        <div class="guide-card">
+            <div class="card-img"><i class="fas fa-gem"></i></div>
+            <div class="card-content">
+                <div class="tag">装备研究</div>
+                <h4>传说武器「龙息之刃」获取流程</h4>
+                <p>隐藏前置任务 + 材料速刷点 + 强化收益分析。</p>
+                <a href="#" class="read-link">阅读全文 →</a>
+            </div>
+        </div>
+        <div class="guide-card">
+            <div class="card-img"><i class="fas fa-pvp"></i></div>
+            <div class="card-content">
+                <div class="tag">PVP技巧</div>
+                <h4>狂战 vs 游侠 竞技场套路</h4>
+                <p>抓后摇与连招克制细节，高分段必备思路。</p>
+                <a href="#" class="read-link">阅读全文 →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 进阶专题 -->
+    <div class="section-header">
+        <h3><i class="fas fa-crown"></i> 硬核专题 · 数据向</h3>
+        <a href="#">探索更多</a>
+    </div>
+    <div class="card-grid">
+        <div class="guide-card">
+            <div class="card-img"><i class="fas fa-chart-line"></i></div>
+            <div class="card-content">
+                <div class="tag">数值研究</div>
+                <h4>全职业伤害稀释阈值</h4>
+                <p>暴击/攻击/穿透收益曲线，最优配装权重表。</p>
+                <a href="#" class="read-link">立即查看 →</a>
+            </div>
+        </div>
+        <div class="guide-card">
+            <div class="card-img"><i class="fas fa-coins"></i></div>
+            <div class="card-content">
+                <div class="tag">赚钱/生产</div>
+                <h4>日入百万银币路线</h4>
+                <p>钓鱼、狩猎、贸易箱子循环收益对比。</p>
+                <a href="#" class="read-link">开始赚钱 →</a>
+            </div>
+        </div>
+        <div class="guide-card">
+            <div class="card-img"><i class="fas fa-mask"></i></div>
+            <div class="card-content">
+                <div class="tag">隐藏要素</div>
+                <h4>全地图古代遗物位置大全</h4>
+                <p>27个隐藏洞窟 + 解密机关坐标一览。</p>
+                <a href="#" class="read-link">查看坐标 →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新闻动态 -->
+    <div class="section-header">
+        <h3><i class="fas fa-bullhorn"></i> 最新动态 & 官方快报</h3>
+        <a href="#">历史</a>
+    </div>
+    <div class="news-block">
+        <div class="news-item">
+            <div class="news-date">2025.05.06</div>
+            <div class="news-title">红色沙漠全球测试开启日期泄露？官方发布神秘预告片</div>
+            <div class="news-badge">热点</div>
+        </div>
+        <div class="news-item">
+            <div class="news-date">2025.04.28</div>
+            <div class="news-title">职业「枪术士」全新实战演示 华丽连段曝光</div>
+            <div class="news-badge">资讯</div>
+        </div>
+        <div class="news-item">
+            <div class="news-date">2025.04.18</div>
+            <div class="news-title">攻略站整理：全区域公会据点战前瞻规则解读</div>
+            <div class="news-badge">攻略前瞻</div>
+        </div>
+        <div class="news-item">
+            <div class="news-date">2025.04.10</div>
+            <div class="news-title">开发者访谈: 天气系统及动态事件将影响世界BOSS出现时机</div>
+            <div class="news-badge">情报</div>
+        </div>
+    </div>
+
+    <!-- 订阅通知 -->
+    <div class="subscribe-box">
+        <i class="fas fa-envelope-open-text" style="font-size: 2rem; color:#E54848;"></i>
+        <h3 style="margin: 10px 0 6px;">攻略站专属简报</h3>
+        <p style="color:#BCB9D0;">抢先获取最新攻略、测试资格提醒与地图资源包</p>
+        <div class="sub-form">
+            <input type="email" id="emailInput" placeholder="你的电子邮箱">
+            <button id="subBtn">免费订阅</button>
+        </div>
+        <p style="font-size:0.7rem; margin-top: 14px;">每周精选·无垃圾邮件</p>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <div>© 2025 红色沙漠非官方攻略站 · 数据基于公开测试与玩家共建</div>
+        <div class="social-icons">
+            <i class="fab fa-discord"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-bilibili"></i>
+        </div>
+    </div>
+</div>
+
+<!-- 简单的交互及占位提示 MVP友好提醒 -->
+<script>
+    (function(){
+        // 订阅按钮模拟
+        const subBtn = document.getElementById('subBtn');
+        const emailField = document.getElementById('emailInput');
+        if(subBtn){
+            subBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                let email = emailField.value.trim();
+                if(email === '' || !email.includes('@')){
+                    alert('请填写有效邮箱地址，接收红色沙漠攻略更新～');
+                } else {
+                    alert(`✓ 订阅成功！攻略简报将会发送至 ${email} ，感谢支持。`);
+                    emailField.value = '';
+                }
+            });
+        }
+        // 所有带有 # 的链接、快捷入口 给出开发中提示 (MVP预览)
+        const allMockLinks = document.querySelectorAll('.read-link, .btn-primary, .btn-outline, .quick-item, .section-header a, .nav a:not(.active), .guide-card .tag, .news-item');
+        allMockLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                if(link.getAttribute('href') === '#' || link.classList.contains('quick-item') || link.tagName === 'A' && link.getAttribute('href') !== 'javascript:void(0)'){
+                    if(link.getAttribute('href') === '#' || link.classList.contains('quick-item') || link.tagName === 'A'){
+                        e.preventDefault();
+                        alert('【MVP演示】该模块完整内容即将上线，敬请期待更深入的红色沙漠攻略库！');
+                    }
+                }
+            });
+        });
+        // 搜索模拟
+        const searchBtn = document.querySelector('.search button');
+        const searchInput = document.querySelector('.search input');
+        if(searchBtn){
+            searchBtn.addEventListener('click', () => {
+                let kw = searchInput.value.trim();
+                if(kw) alert(`全站搜索开发中，即将可以搜索「${kw}」相关内容。`);
+                else alert('输入你想查询的攻略关键词吧');
+            });
+        }
+    })();
+</script>
+</body>
+</html>
